@@ -90,7 +90,7 @@ pub struct Metagraph<AccountId: TypeInfo + Encode + Decode> {
     coldkeys: Vec<AccountId>,                   // coldkey per UID
     identities: Vec<Option<ChainIdentityOfV2>>, // coldkeys identities
     axons: Vec<AxonInfo>,                       // UID axons
-    active: Vec<bool>,                          // Avtive per UID
+    active: Vec<bool>,                          // Active per UID
     validator_permit: Vec<bool>,                // Val permit per UID
     pruning_score: Vec<Compact<u16>>,           // Pruning per UID
     last_update: Vec<Compact<u64>>,             // Last update per UID
@@ -141,7 +141,7 @@ pub struct SelectiveMetagraph<AccountId: TypeInfo + Encode + Decode + Clone> {
     alpha_in_emission: Option<Compact<AlphaCurrency>>,  // amount injected outstanding per block
     tao_in_emission: Option<Compact<TaoCurrency>>,      // amount of tao injected per block
     pending_alpha_emission: Option<Compact<AlphaCurrency>>, // pending alpha to be distributed
-    pending_root_emission: Option<Compact<TaoCurrency>>, // panding tao for root divs to be distributed
+    pending_root_emission: Option<Compact<TaoCurrency>>, // pending tao for root divs to be distributed
     subnet_volume: Option<Compact<u128>>,                // volume of the subnet in TAO
     moving_price: Option<I96F32>,                        // subnet moving price.
 
@@ -190,7 +190,7 @@ pub struct SelectiveMetagraph<AccountId: TypeInfo + Encode + Decode + Clone> {
     coldkeys: Option<Vec<AccountId>>, // coldkey per UID
     identities: Option<Vec<Option<ChainIdentityOfV2>>>, // coldkeys identities
     axons: Option<Vec<AxonInfo>>,     // UID axons.
-    active: Option<Vec<bool>>,        // Avtive per UID
+    active: Option<Vec<bool>>,        // Active per UID
     validator_permit: Option<Vec<bool>>, // Val permit per UID
     pruning_score: Option<Vec<Compact<u16>>>, // Pruning per UID
     last_update: Option<Vec<Compact<u64>>>, // Last update per UID
@@ -651,7 +651,7 @@ impl<T: Config> Pallet<T> {
             alpha_dividends_per_hotkey.push((hotkey.clone(), alpha_divs.into()));
         }
         let current_block: u64 = Pallet::<T>::get_current_block_as_u64();
-        let last_step = LastMechansimStepBlock::<T>::get(netuid);
+        let last_step = LastMechanismStepBlock::<T>::get(netuid);
         let blocks_since_last_step: u64 = current_block.saturating_sub(last_step);
         let (total_stake_fl, alpha_stake_fl, tao_stake_fl): (
             Vec<I64F64>,
@@ -683,7 +683,7 @@ impl<T: Config> Pallet<T> {
             // Tempo terms.
             block: current_block.into(),           // Block at call.
             tempo: Self::get_tempo(netuid).into(), // epoch tempo
-            last_step: LastMechansimStepBlock::<T>::get(netuid).into(), // last epoch
+            last_step: LastMechanismStepBlock::<T>::get(netuid).into(), // last epoch
             blocks_since_last_step: blocks_since_last_step.into(), // blocks since last epoch.
 
             // Subnet emission terms
@@ -695,7 +695,7 @@ impl<T: Config> Pallet<T> {
             alpha_in_emission: SubnetAlphaInEmission::<T>::get(netuid).into(), // amount injected outstanding per block
             tao_in_emission: SubnetTaoInEmission::<T>::get(netuid).into(), // amount of tao injected per block
             pending_alpha_emission: PendingEmission::<T>::get(netuid).into(), // pending alpha to be distributed
-            pending_root_emission: TaoCurrency::from(0u64).into(), // panding tao for root divs to be distributed
+            pending_root_emission: TaoCurrency::from(0u64).into(), // pending tao for root divs to be distributed
             subnet_volume: subnet_volume.into(),
             moving_price: SubnetMovingPrice::<T>::get(netuid),
 
@@ -948,12 +948,12 @@ impl<T: Config> Pallet<T> {
             },
             Some(SelectiveMetagraphIndex::LastStep) => SelectiveMetagraph {
                 netuid: netuid.into(),
-                last_step: Some(LastMechansimStepBlock::<T>::get(netuid).into()),
+                last_step: Some(LastMechanismStepBlock::<T>::get(netuid).into()),
                 ..Default::default()
             },
             Some(SelectiveMetagraphIndex::BlocksSinceLastStep) => {
                 let current_block: u64 = Pallet::<T>::get_current_block_as_u64();
-                let last_step = LastMechansimStepBlock::<T>::get(netuid);
+                let last_step = LastMechanismStepBlock::<T>::get(netuid);
                 let blocks_since_last_step: u64 = current_block.saturating_sub(last_step);
                 SelectiveMetagraph {
                     netuid: netuid.into(),
@@ -1644,13 +1644,13 @@ fn test_selective_metagraph() {
     metagraph.merge_value(&metagraph_name, name_index);
     assert!(metagraph.name.is_some());
 
-    let alph_low_index: usize = 50;
+    let alpha_low_index: usize = 50;
     let metagraph_alpha_low = SelectiveMetagraph::<u32> {
         netuid: NetUid::ROOT.into(),
         alpha_low: Some(0_u16.into()),
         ..Default::default()
     };
     assert!(metagraph.alpha_low.is_none());
-    metagraph.merge_value(&metagraph_alpha_low, alph_low_index);
+    metagraph.merge_value(&metagraph_alpha_low, alpha_low_index);
     assert!(metagraph.alpha_low.is_some());
 }

@@ -127,7 +127,7 @@ impl<T: Config> Pallet<T> {
         RegistrationsThisBlock::<T>::insert(netuid, registrations_this_block);
     }
     pub fn set_last_mechanism_step_block(netuid: NetUid, last_mechanism_step_block: u64) {
-        LastMechansimStepBlock::<T>::insert(netuid, last_mechanism_step_block);
+        LastMechanismStepBlock::<T>::insert(netuid, last_mechanism_step_block);
     }
     pub fn set_registrations_this_interval(netuid: NetUid, registrations_this_interval: u16) {
         RegistrationsThisInterval::<T>::insert(netuid, registrations_this_interval);
@@ -325,7 +325,7 @@ impl<T: Config> Pallet<T> {
         RegistrationsThisBlock::<T>::get(netuid)
     }
     pub fn get_last_mechanism_step_block(netuid: NetUid) -> u64 {
-        LastMechansimStepBlock::<T>::get(netuid)
+        LastMechanismStepBlock::<T>::get(netuid)
     }
     pub fn get_registrations_this_interval(netuid: NetUid) -> u16 {
         RegistrationsThisInterval::<T>::get(netuid)

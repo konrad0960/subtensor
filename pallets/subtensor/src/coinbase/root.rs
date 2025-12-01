@@ -318,7 +318,7 @@ impl<T: Config> Pallet<T> {
         PendingRootAlphaDivs::<T>::remove(netuid);
         PendingOwnerCut::<T>::remove(netuid);
         BlocksSinceLastStep::<T>::remove(netuid);
-        LastMechansimStepBlock::<T>::remove(netuid);
+        LastMechanismStepBlock::<T>::remove(netuid);
         LastAdjustmentBlock::<T>::remove(netuid);
 
         // --- 16. Serving / rho / curves, and other per-net controls.

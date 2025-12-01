@@ -149,7 +149,7 @@ impl<T: Config> Pallet<T> {
         }
 
         // --- 5. Compute owner cuts and remove them from alpha_out remaining.
-        // Remove owner cuts here so that we can properly seperate root dividends in the next step.
+        // Remove owner cuts here so that we can properly separate root dividends in the next step.
         // Owner cuts are accumulated and then fed to the drain at the end of this func.
         let cut_percent: U96F32 = Self::get_float_subnet_owner_cut();
         let mut owner_cuts: BTreeMap<NetUid, U96F32> = BTreeMap::new();
@@ -236,7 +236,7 @@ impl<T: Config> Pallet<T> {
             {
                 // Restart counters.
                 BlocksSinceLastStep::<T>::insert(netuid, 0);
-                LastMechansimStepBlock::<T>::insert(netuid, current_block);
+                LastMechanismStepBlock::<T>::insert(netuid, current_block);
 
                 // Get and drain the subnet pending emission.
                 let pending_alpha = PendingEmission::<T>::get(netuid);

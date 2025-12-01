@@ -372,7 +372,7 @@ fn dissolve_clears_all_per_subnet_storages() {
         PendingRootAlphaDivs::<Test>::insert(net, AlphaCurrency::from(1));
         PendingOwnerCut::<Test>::insert(net, AlphaCurrency::from(1));
         BlocksSinceLastStep::<Test>::insert(net, 1u64);
-        LastMechansimStepBlock::<Test>::insert(net, 1u64);
+        LastMechanismStepBlock::<Test>::insert(net, 1u64);
         ServingRateLimit::<Test>::insert(net, 1u64);
         Rho::<Test>::insert(net, 1u16);
         AlphaSigmoidSteepness::<Test>::insert(net, 1i16);
@@ -527,7 +527,7 @@ fn dissolve_clears_all_per_subnet_storages() {
         assert!(!PendingRootAlphaDivs::<Test>::contains_key(net));
         assert!(!PendingOwnerCut::<Test>::contains_key(net));
         assert!(!BlocksSinceLastStep::<Test>::contains_key(net));
-        assert!(!LastMechansimStepBlock::<Test>::contains_key(net));
+        assert!(!LastMechanismStepBlock::<Test>::contains_key(net));
         assert!(!ServingRateLimit::<Test>::contains_key(net));
         assert!(!Rho::<Test>::contains_key(net));
         assert!(!AlphaSigmoidSteepness::<Test>::contains_key(net));
